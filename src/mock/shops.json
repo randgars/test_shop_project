@@ -1,0 +1,38 @@
+[
+  {
+    "id": 0,
+    "address": "пр-т Пушкина 37",
+    "mode": "9:00-23:00",
+    "name": "Мартин",
+    "products": [
+      {
+        "id": 0,
+        "name": "some first good",
+        "description": "description for some first good"
+      },
+      {
+        "id": 1,
+        "name": "some second good",
+        "description": "description for some second good"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "address": "ул. Дунина Марцинкевича 11",
+    "mode": "24 часа в сутки",
+    "name": "Соседи",
+    "products": [
+      {
+        "id": 0,
+        "name": "some first good",
+        "description": "description for some first good"
+      },
+      {
+        "id": 1,
+        "name": "some second good",
+        "description": "description for some second good"
+      }
+    ]
+  }
+]

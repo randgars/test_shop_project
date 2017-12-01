@@ -6,35 +6,33 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import {
-  getShops
+  addShop
 } from '../actions/';
-import Main from '../components/App';
+import Main from '../components/Home';
 
-class App extends Component {
-  componentDidMount() {
-    this.props.actions.getShops();
-  }
-
+class Home extends Component {
   render() {
-    const { actions } = this.props;
-    return <Main actions={actions} />;
+    const { shops, actions } = this.props;
+    return <Main actions={actions} shops={shops}/>;
   }
 }
 
-App.propTypes = {
+Home.propTypes = {
   actions: PropTypes.shape({})
 };
 
 function mapStateToProps(state) { // eslint-disable-line no-unused-vars
-  const props = {};
+  const props = {
+    shops: state.shops.shops
+  };
   return props;
 }
 function mapDispatchToProps(dispatch) {
   const actions = {
-    getShops
+    addShop
   };
   const actionMap = { actions: bindActionCreators(actions, dispatch) };
   return actionMap;
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));

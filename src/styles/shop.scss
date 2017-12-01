@@ -1,0 +1,9 @@
+.shop-component__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  .shop-component__header-button {
+    margin-right: 10px;
+  }
+}

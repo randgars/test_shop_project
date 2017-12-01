@@ -1,20 +1,24 @@
 import React from 'react';
-import './app.css';
+import { Route, Link } from 'react-router-dom';
+
+import '../styles/app.scss';
 
 import AppRoutes from '../routes/appRoutes';
 
-class AppComponent extends React.Component {
+import { Toolbar } from 'react-md';
 
-  render() {
-    return (
+const AppComponent = (props) => {
+  return (
+    <Route render={({ location }) => (
       <div>
-        <AppRoutes {...this.props} />
+        <Toolbar
+          colored
+          title={<Link to={'/'}>Test project</Link>}
+          />
+        <AppRoutes location={location} />
       </div>
-    );
-  }
+    )}/>
+  );
 }
-
-AppComponent.defaultProps = {
-};
 
 export default AppComponent;
