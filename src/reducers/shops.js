@@ -4,7 +4,8 @@ import {
   ADD_SHOP,
   EDIT_SHOP,
   ADD_PRODUCT,
-  EDIT_PRODUCT
+  EDIT_PRODUCT,
+  EDIT_SERIAL_NUMBER
 } from '../actions/const';
 
 const initialState = {
@@ -30,6 +31,9 @@ export default function shops(state = initialState, action) {
       return {...state, shops: action.shops};
 
     case EDIT_PRODUCT:
+      return {...state, shops: action.shops};
+
+    case EDIT_SERIAL_NUMBER:
       return {...state, shops: action.shops};
 
     default:

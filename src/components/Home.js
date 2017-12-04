@@ -13,6 +13,8 @@ import '../styles/home.scss';
 import DialogForm from './dialog/dialogForm';
 import MapComponent from './map/Map';
 
+import DragSortableList from 'react-drag-sortable'
+
 class HomeComponent extends PureComponent {
   constructor(props) {
     super(props);
@@ -20,7 +22,20 @@ class HomeComponent extends PureComponent {
     this.hide = this.hide.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.submit = this.submit.bind(this);
+    this.onSort = this.onSort.bind(this);
     this.state = { visible: false };
+  }
+
+  onSort(elements) {
+    const tempElements = [];
+    for (let i = 0; i < elements.length; i++) {
+      let element = {
+        id: elements[i].content.props.id,
+        serial_number: elements[i].rank
+      };
+      tempElements.push(element);
+    }
+    this.props.actions.editSerialNumber(this.props.shops, tempElements);
   }
 
   submit(values) {
@@ -64,33 +79,39 @@ class HomeComponent extends PureComponent {
               shops.length === 0 ?
               <p>No shops</p> :
               <List>
-                {
-                  shops && shops.map((item, index) =>
-                    <ListItem
-                      key={index}
-                      primaryText={item.name}
-                      leftIcon={item.serial_number}
-                      secondaryText={
-                        <div>
-                          Mode: {item.mode} <br/>
-                          Address: {item.address}
-                        </div>
-                      }
-                      threeLines
-                      primaryTextClassName="home-component__item-title"
-                      rightIcon={
-                        <Button
-                          flat
-                          primary
-                          swapTheming
-                          component={Link}
-                          to={`/shop/${item.id}`}
-                        >Open</Button>
-                      }
-                    />
-                  )
-                }
-              </List>
+              <DragSortableList items={
+                shops && shops.map((item, index) => {
+                  return (
+                    { content: (
+                      <ListItem
+                        id={item.id}
+                        key={index}
+                        primaryText={item.name}
+                        leftIcon={item.serial_number}
+                        secondaryText={
+                          <div>
+                            Mode: {item.mode} <br/>
+                            Address: {item.address}
+                          </div>
+                        }
+                        threeLines
+                        primaryTextClassName="home-component__item-title"
+                        rightIcon={
+                          <Button
+                            flat
+                            primary
+                            swapTheming
+                            component={Link}
+                            to={`/shop/${item.id}`}
+                          >Open</Button>
+                        }
+                      />)});
+                })
+              }
+                dropBackTransitionDuration={0.3}
+                onSort={this.onSort}
+                type="vertical"/>
+                </List>
             }
           </div>
           <div className="home-component__map">

@@ -3,13 +3,15 @@ import getShop from './getShop';
 import addShop from './addShop';
 import editShop from './editShop';
 import editProduct from './editProduct';
+import editSerialNumber from './editSerialNumber';
 
 const actions = {
   getShops,
   getShop,
   addShop,
   editShop,
-  editProduct
+  editProduct,
+  editSerialNumber
 };
 
 module.exports = actions;

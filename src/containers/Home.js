@@ -6,7 +6,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import {
-  addShop
+  addShop,
+  editSerialNumber
 } from '../actions/';
 import Main from '../components/Home';
 
@@ -29,7 +30,8 @@ function mapStateToProps(state) { // eslint-disable-line no-unused-vars
 }
 function mapDispatchToProps(dispatch) {
   const actions = {
-    addShop
+    addShop,
+    editSerialNumber
   };
   const actionMap = { actions: bindActionCreators(actions, dispatch) };
   return actionMap;
