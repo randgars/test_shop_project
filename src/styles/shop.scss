@@ -7,3 +7,9 @@
     margin-right: 10px;
   }
 }
+
+@media screen and (max-width: 1044px) {
+  .shop-component__header {
+    flex-direction: column;
+  }
+}

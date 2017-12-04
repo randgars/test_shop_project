@@ -2,6 +2,8 @@ import {
   ADD_SHOP
 } from './const';
 
+import getGeolocation from '../sources/getGeolocation';
+
 export default function addShop(shops, values) {
   return (dispatch) => {
     if (!shops) {
@@ -9,13 +11,26 @@ export default function addShop(shops, values) {
     }
     const tempShops = Object.assign([], shops);
     const shop = {
+      serial_number: tempShops.length + 1,
       id: +Math.random().toString().substr(2),
-      address: values.address,
+      address: `${values.city}, ${values.address}`,
       mode: `${values.startTime}-${values.endTime}`,
       name: values.name,
       products: []
     };
-    tempShops.push(shop);
-    dispatch({ type: ADD_SHOP, shops: tempShops });
+    getGeolocation(shop)
+      .then(
+        res => {
+          shop.location = res.data.results[0].geometry.location;
+          tempShops.push(shop);
+          dispatch({ type: ADD_SHOP, shops: tempShops });
+        },
+        err => {
+          window.console.log(err);
+        }
+      )
+      .catch(err => {
+        window.console.error(err);
+      })
   };
 }

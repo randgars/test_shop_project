@@ -29,7 +29,7 @@ class ShopComponent extends PureComponent {
 
   submit(values) {
     const { shops, shop, actions} = this.props;
-    actions.editShop(shop.id, values, shops);
+    actions.editShop(shop, values, shops);
     this.setState({ visible: false });
   }
 
@@ -51,10 +51,17 @@ class ShopComponent extends PureComponent {
   render() {
     const { shop, shops, actions } = this.props;
     const { visible, formChoosen } = this.state;
+    if (!shop) {
+      return null;
+    }
     return (
       <div>
         <div className="shop-component__header">
-          <h2>{shop && shop.name}</h2>
+          <div>
+            <h2>{shop && shop.name}</h2>
+            <p>Mode: {shop && shop.mode}</p>
+            <p>Address: {shop && shop.address}</p>
+          </div>
           <div>
             <Button
               flat
@@ -73,26 +80,30 @@ class ShopComponent extends PureComponent {
               onClick={this.show}
               id="editShopButton"
             >
-              Edit
+              Edit Shop
             </Button>
           </div>
         </div>
         <DialogForm submit={this.submit} hide={this.hide} visible={visible} formChoosen={formChoosen}/>
-        <DataTable plain>
-          <TableHeader>
-            <TableRow>
-              <TableColumn>Product name</TableColumn>
-              <TableColumn>Description</TableColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {
-              shop && shop.products && shop.products.map((item, index) =>
-                <ProductItem key={index} item={item} shop={shop} shops={shops} actions={actions}/>
-              )
-            }
-          </TableBody>
-        </DataTable>
+        {
+          shop.products && shop.products.length === 0 ?
+          <p>No products</p> :
+          <DataTable plain>
+            <TableHeader>
+              <TableRow>
+                <TableColumn>Product name</TableColumn>
+                <TableColumn>Description</TableColumn>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {
+                shop.products && shop.products.map((item, index) =>
+                  <ProductItem key={index} item={item} shop={shop} shops={shops} actions={actions}/>
+                )
+              }
+            </TableBody>
+          </DataTable>
+        }
       </div>
     );
   }

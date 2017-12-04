@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import '../styles/home.scss';
 
 import DialogForm from './dialog/dialogForm';
+import MapComponent from './map/Map';
 
 class HomeComponent extends PureComponent {
   constructor(props) {
@@ -46,7 +47,7 @@ class HomeComponent extends PureComponent {
     const { shops } = this.props;
     const { visible, formChoosen } = this.state;
     return (
-      <div>
+      <div className="home-component">
         <div className="home-component__header">
           <Button
             onClick={this.show}
@@ -57,37 +58,44 @@ class HomeComponent extends PureComponent {
           >Add shop</Button>
         </div>
         <DialogForm submit={this.submit} hide={this.hide} visible={visible} formChoosen={formChoosen} />
-        <div className="home-component__shops">
-          <div>
-            <List>
-              {
-                shops && shops.map((item, index) =>
-                  <ListItem
-                    key={index}
-                    primaryText={item.name}
-                    secondaryText={
-                      <div>
-                        Mode: {item.mode} <br/>
-                        Address: {item.address}
-                      </div>
-                    }
-                    threeLines
-                    primaryTextClassName="home-component__item-title"
-                    rightIcon={
-                      <Button
-                        flat
-                        primary
-                        swapTheming
-                        component={Link}
-                        to={`/shop/${item.id}`}
-                      >Products</Button>
-                    }
-                  />
-                )
-              }
-            </List>
+        <div className="home-component__container">
+          <div className="home-component__shops">
+            {
+              shops.length === 0 ?
+              <p>No shops</p> :
+              <List>
+                {
+                  shops && shops.map((item, index) =>
+                    <ListItem
+                      key={index}
+                      primaryText={item.name}
+                      leftIcon={item.serial_number}
+                      secondaryText={
+                        <div>
+                          Mode: {item.mode} <br/>
+                          Address: {item.address}
+                        </div>
+                      }
+                      threeLines
+                      primaryTextClassName="home-component__item-title"
+                      rightIcon={
+                        <Button
+                          flat
+                          primary
+                          swapTheming
+                          component={Link}
+                          to={`/shop/${item.id}`}
+                        >Open</Button>
+                      }
+                    />
+                  )
+                }
+              </List>
+            }
           </div>
-          <div></div>
+          <div className="home-component__map">
+            <MapComponent shops={shops} />
+          </div>
         </div>
       </div>
     );

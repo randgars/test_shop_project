@@ -34,6 +34,14 @@ const shopForm = (props) => {
         component={textField}
       />
       <Field
+        id="city"
+        lineDirection="left"
+        name="city"
+        placeholder="Enter the city"
+        label="City"
+        component={textField}
+      />
+      <Field
         id="address"
         lineDirection="left"
         name="address"
